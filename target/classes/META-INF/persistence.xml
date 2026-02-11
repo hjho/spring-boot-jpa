@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
+                https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+
+    <persistence-unit name="jpabegin" transaction-type="RESOURCE_LOCAL">
+        <class>jpabasic.reserve.domain.User</class>
+        <class>jpabasic.reserve.domain.generated.entity.Employee</class>
+        <class>jpabasic.reserve.domain.generated.entity.Writer</class>
+        <class>jpabasic.reserve.domain.generated.entity.Hotel</class>
+        <class>jpabasic.reserve.domain.generated.entity.Review</class>
+        <class>jpabasic.reserve.domain.generated.entity.AccessLog</class>
+        <class>jpabasic.reserve.domain.generated.entity.ActivityLog</class>
+		
+		<!-- true - 엔티티 class 선언 필요 -->
+        <!-- false - 엔티티 class 자동 검색 -->
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        
+        <properties>
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost/jpabegin?characterEncoding=utf8"/>
+            <property name="jakarta.persistence.jdbc.user" value="hjho"/>
+            <property name="jakarta.persistence.jdbc.password" value="hjho1234"/>
+
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.hikari.poolName" value="pool"/>
+            <property name="hibernate.hikari.maximumPoolSize" value="10"/>
+            <property name="hibernate.hikari.minimumIdle" value="10"/>
+            <property name="hibernate.hikari.connectionTimeout" value="1000"/> <!-- 1s -->
+            
+            <!-- hibernate 전용 속성 -->
+            <!-- db 방언 - db 고유의 기능 사용 
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" /> -->
+
+            <!-- 스키마 자동 생성 -->
+            <!-- create     : drop + create / 개발 초기 단계 / 테스트 -->
+            <!-- create-drop: drop + create + drop / 프로그램 종료시 삭제 / 자동화된 테스트 -->
+            <!-- update     : 변경 사항만 수정 / 개발 초기 단계 / 테스트 서버 -->
+            <!-- validate   : 변경 사항 발생시 경고를 남기고 실행하지 않음 / 테스트 서버 / 스테이징 또는 운영 단계 -->
+            <!-- none       : 자동 생성기능을 사용하지 않을 때/유효하지 않은 값 입력시 / 위 4가지 옵션을 제외한 값 / 스테이징 또는 운영 단계 -->
+            <property name="hibernate.hbm2ddl.auto" value="update" />
+
+            <!-- sql log 출력 -->
+            <property name="hibernate.show_sql" value="true" />
+
+            <!-- sql log 정렬 -->
+            <property name="hibernate.format_sql" value="true" />
+
+            <!-- sql log 주석 출력 -->
+            <property name="hibernate.use_sql_comments" value="true" />
+            
+            <!-- sql log 색 표시 -->
+            <property name="hibernate.highlight_sql" value="true" />
+            
+            <!-- sql log 파라미터 출력 -->
+            <property name="hibernate.type.descriptor.sql.basic_binder" value="TRACE" />
+            
+            <!-- 기본 키 생성 전략
+            <property name="hibernate.id.new_generator_mappings" value="true" />  -->
+            
+        </properties>
+    </persistence-unit>
+</persistence>

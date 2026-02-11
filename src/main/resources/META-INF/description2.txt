@@ -1,0 +1,377 @@
+
+
+#3. EntityManager가 제공하는 메서드.
+    - EMF, User, UserSaveMain, UserGetMain, UserUpdateMain
+    - 저장: persist()
+    - 조회: find()
+    - 삭제: remove()
+    - // 변경: merge()
+
+#3-5. Entity 식별자 생성방식
+    - Entity: User
+        - annotation: @Entity, @Table, @Id, @Column
+    - Entity: Hotel, Grade, Review, ActivityLog, AccessLog
+        - annotation: @Enumerated, @GeneratedValue, @SequenceGenerator, @TableGenerator, 
+    1. 직접할당.
+    2. 식별 칼럼 방식: 저장 시점에 INSERT 쿼리 실행.
+    3. 시퀀스 사용 방식: 저장 시점에 시퀀스 사용해서 식별자 생성.
+    4. 테이블 저장 방식: 저장 시점에 테이블 사용해서 식별자 생성.
+
+#6. Entity @Embeddable
+    - Entity: Address, Employee
+    - Annotation
+        - @Embeddable, @Embedded, @AttributeOverrides
+    - 엔티티가 아닌 타입을 한 개 이상의 필드와 애핑 할 때 사용.
+    - Embeddable class 가 null이면 다 null 임.
+
+#7. Entity @SecondaryTable
+    - Database Table & Entity
+        - writer(id, name)
+            - writer_address(writer_id, content_type, content)
+            - writer_intro(writer_id, addr1, addr2, zipcode)
+        - Writer(id, name, intro(Intro), address(Address))
+            - Intro(contentType, content)
+            - Address(address1, address2, zipcode)
+    - Annotation
+        - @SecondaryTables
+    - writer 조회 시 left join으로 조회.
+    - writer 삭제 시 다른 두 테이블도 삭제.
+    - 다른 테이블에 저장된 데이터를 @Embeddable로 매핑 가능
+    - 다른 테이블에 저장된 데이터가 개념적으로 Value(값) 일 때 사용.
+        - 1-1 관계인 두 테이블을 매핑할 때 종종 출현.
+
+#8. Entity Set 매핑 @ElementCollection
+    - Entity: Role
+        - Embeddable 버전
+            - Role2, GrantedPermission
+    - Database Table & Entity
+        - role(id, name)
+            - role_perm(role_id, perm)
+        - Role(id, name, permission(Set<String>))
+    - Annotation
+        - @ElementCollection, @CollectionTable
+
+#9. Entity List 매핑.
+    - Entity: Question
+        - Embeddable 버전
+            - Question2, Choice
+    - Database Table & Entity
+        - question(id, text)
+            - question_choice(question_id, idx, text)
+        - Question(id, text, choices(List<String>))
+    - Annotation
+        - @ElementCollection, @CollectionTable, @OrderColumn
+    - 조회(find, enity.getLists())
+        - lazy: Entity 테이블 조회 후 CollectionTable 테이블 조회
+        - eager: Entity 테이블 조회 시 left join 으로 CollectionTable 조회
+    - 수정(setLists(List.of("", ""))) 
+        - delete 후 insert
+    - 삭제(remove(entity))
+        - Entity 테이블 데이터 Delete 후 CollectionTable 테이블 데이터 Delete
+
+#10. Entity Map 매핑.
+    - Entity: Document
+        - Embeddable 버전
+            - Document2, PropValue
+    - Database Table & Entity
+        - doc(id, title, content)
+            - doc_prop(doc_id, name, value)
+        - Document(id, title, content, props(Map<String, String>))
+    - Annotation
+        - @ElementCollection, @CollectionTable, @MapKeyColumn, @Column
+    - 저장(persist)
+        - Entity insert 후, CollectionTable insert
+    - Map의 추가/수정/삭제
+        - delete > insert
+
+#11. Entity 맵핑 주의사항.
+    - file: Main11.java
+    - JPA 쿼리 language 사용.
+    - 성능 문제
+        - 설문 질문 목록을 보여줄 때 각 질문의 보기 개수를 함께 표시?
+            - 페이징 처리 필요
+            - 콜렉션 데이터 자체는 필요없음.
+        - 역할 목록을 표시할 때 가진 권한을 함계 표시?
+            - 페이징 처리 필요
+            - 각 역할마다 권한 조회 쿼리를 실행하고 싶지 않음.
+    > CQRS
+        - 변경 기능: JPA활용
+        - 조회기능: MyBatis/jdbcTemplate/JPA 중 알맞은 기술 사용.
+    - JPA로 다 하겠다는 생각 하지 말기,,,,
+        - 조회와 변경을 구분하여 사용하기.
+
+#12. 영속객체와 영속 컨텍스트 
+    - 영속 엔티티/객체 
+        - DB데이터에 매핑되는 메모리상의 객체 
+    - 영속 컨텍스트
+        - 일종의 메모리 저장소.
+        - EntityManager가 관리할 엔티티 객체 보관.
+        - (엔티티 타입, 식별자) > 엔티티 객체 
+    - close() 시 사라짐.
+    - 배치처리 X
+    - 동일한 객체를 두 번 조회 시 
+        - 첫번째는 select, 두번째는 select 하지 않음.
+
+#12. 영속 객체의 라이프 사이클
+    - 이미지: JPA & Spring Data JPA 기초-최범균(인프런) 12강. 영속 컨텍스트 & 라이프 사이클
+    - 생성: 아직 영속 객체라고 보기 힘듬. 걍 생성임.
+    - persist/find > 관리됨: 영속 컨텍스트에 보관된 상태. 
+        - 변경을 추적한다.
+        - commit 시점에 변경된 내역이 DB에 반영.
+    - remove > 삭제: 삭제된 사실을 변경 추적! 
+        - commit 시점에 삭제 처리.
+    - close > 분리: 변경 추적을 하지 않음.
+        - detach > 강제 분리(close전 또는 commit 전에 사용.)
+    - JPA는 영속 엔티티를 영속 컨텍스트에 담아 변경 추적.
+        - 트랜잭션 커밋 시점에 변경 반영.
+    - 대량 변경은 궅이 JPA로 할 필요 없음.
+        - 직접 쿼리 실행하는게 나음.
+    - 분리됨 상태는 변경을 추적하지 않음.
+
+#14. 1-1 단방향 연관.
+    - 주의사항
+        - 진짜 필요할 때만 사용할 것.
+            - 조회 기능은 별도 모델 CQRS를 사용!
+        - Embeddable 매핑이 가능하다면 꼭 사용.
+    - Database Table & Entity
+        - user("email", name, create_date)
+        - membership_card(card_no, "user_email", expiry_date, enabled)
+        - User("email", name, createDate)
+        - MembershipCard(cardNumber, "owner(User)", expiryDate, enabled)
+    - Annotation
+        - @OneToOne, @JoinColumn(name="user_email")
+        - 조회: @OneToOne의 fetch속성 default는 EAGER
+    - service: MainFk
+
+#14. 1-1 단방향 연관. (식별자 공유)
+    - Database Table & Entity
+        - user("email", name, create_date)
+        - best_pick("user_email", title)
+        - User("email", name, createDate)
+        - BestPick(email, user(User), title)
+    - Annotation
+        - @OneToOne, @PrimaryKeyJoinColumn(name="user_email")
+    - service: MainPk
+
+#15. N-1 단방향 연관.
+    - N테이블 안에 1테이블이 있음.
+    - Database Table & Entity
+        - sight(id, name)-1
+            - sight_review(id, sight_id, grade, comment)-N
+        - Sight(id, name)
+            - Review(id, dight(Sight), grade, comment)
+    - Annotation
+        - @ManyToOne, @JoinColumn(name="sight_id")
+        - 조회: @ManyToOne의 fetch속성 default는 EAGER
+    - insert
+        - Sight sight = em.find(Sight.class, "S-01");
+        - Review review = new Review(sight, grade, comment);
+        - em.persist(review);
+    - service: MainNto1
+
+#16. 1-N 단방향 연관.
+    - 1테이블 안에 N테이블이 콜렉션으로 있음.
+    - 콜렉션을 사용한 매핑.
+        - Set, List, Map
+    - Database Table & Entity
+        [Set]
+            - team(id, name)-1
+                - player(id, team_id, name)-N
+            - Team(id, name, players(Set<Player>))
+                - Player(id, name)
+        [List]
+            - survey(id, name)-1
+                - survey_question(id, survey_id, order_no, title)-N
+            - Survey(id, name, questions(List<Question>))
+                - Question(id, title)
+        [Map]
+            - game(id, name)
+                - game_member(id, name, game_id, role_name)
+            - Game(id, name, members(Map<String, Member>))
+                - Member(id, name)
+    - Annotation
+        - @OneToMany, @JoinColumn(name="team_id")
+            - List: @OrderColumn(name="order_no")
+            - Map: @MapKeyColumn(name="role_name")
+        - 조회: @OneToMany의 fetch속성 default는 EAGER
+    - service: MainSet, MainList, MainMap
+
+#17. 영속성 전파, 연관 매핑 고려사항.
+    - 연관된 엔티티에 영속 상태를 전파.
+        - 저장할 때 연관된 엔티티도 함께 저장.
+    - ex) team에 player를 저장 할 때, player를 find하여 입력하는게 아니라 new Player로 만든다.
+    - @OneToMany(cascade = CascadeType.PERSIST)
+        - CascadeType {ALL, PERSIST, MERGE, REMOVE, REFRESH, DETACH}
+        - 하지만!! 특별한 이유가 없다면, 사용하지 말 것!
+        - 진짜 진짜 어쩌다 어쩌다 한번.
+    - 연관 대신에 ID 값으로 참조 고려
+        - 객체 탐색이 쉽다고 연관 쓰기 없기
+    - 조회는 전용 쿼리나 구현 사용 고려(CQRS)
+    - 엔티티가 아닌 밸류인지 확인. 
+        - 1-1, 1-N 관계에서 특히....
+    - 1-N 보다는 N-1 (물론 진짜 어쩔 수 없이 써야 한다면)
+    - 양방향은 진짜 쓰지 말자
+
+#18. JPQL
+    - file: MainJpql.java
+        - 쿼리 중 :id - query.setParameter("id", "H-001")
+        - 쿼리 중 ?   - query.setParameter(0, "H-001")
+        - Paging: setFirstResult(8), setMaxResult(4)
+            - 9번째 결과부터 4개의 row.    
+        - 그 외는 SQL Language와 같다.
+    - JPA Query Language
+    - SQL 쿼리와 유사
+    - 테이블 대신 엔티티 이름, 속성 사용.
+    - 그 외
+        - 조인, count, max, min, avg, sum
+        - group by, having
+        - 콜렉션 관련 비교.
+            - member of, not member of, is empty, is not empty
+            - exists, all, any
+        - JPA 함수
+            - concat, substring, trim, abs(절대값), sqrt
+            - 콜렉션 함수: size, index
+    - 다음 경우는 JPQL말고 일반 쿼리 사용 고려.
+        - 여러 테이블 조인.(레거시 테이블 조인)
+        - DBMS에 특화된 쿼리 필요.(오라클 힌트)
+        - 서브 쿼리 필요.
+        - 통계, 대량 데이터 조회/처리
+
+#19. Criteria
+    - file: MainCriteria.java
+    - 코드로 쿼리를 구성하는 API
+    - 기본 사용법.
+        - Builder > Query
+        - from절, select절, where절, orderBy절,,,
+    - CriteriaBuilder 주요 메소드! 찾으면 더 나올 듯.
+    - 왜 사용 하냐?
+        - 타입의 안전한 코드를 만들수 있다.
+        - 동적으로 검색 조건을 만들수있다. (Predicate p = cb.conjunction();)
+
+#20. 기타 특징.
+    [AttributeConverter]
+    - 매핑을 지원하지 않는 자바 타입과 DB 타입 간 변환 처리.
+        - ex) boolean 타입과 char(1) 타입 간 변환.
+        - ex) @Converter
+        - BooleanYesNoConverter.java
+    [@Formula]
+    - SQL을 이용한 속성 매핑.
+        - 조회에서만 매핑 처리.
+        - 주로 DB함수 호출, 서브 쿼리 결과를 매핑.
+        - Notice.java, NoticeReadonly.java
+    [open()]
+        - 수정 쿼리는 기본적으로 모든 컬럼의 사용.
+    [@DynamicUpdate]
+        - 변경된 칼럼만 UPDATE 쿼리에 포함. Class
+        - Notice.java, NoticeReadonly.java
+    [@DynamicInsert]
+        - null 이 아닌 칼럼만 INSERT 쿼리에 포함. Class.
+    [@Immutable]
+        - 변경 추적 대상에서 제외 처리.
+            - 변경 추적 위한 메모리 사용 감소.
+            - 주로 조회 목적으로만 사용되는 엔티티 매핑에 사용.
+    [@Subselect]
+        - select 경과를 엔티티로 매핑.
+            - 수정 대상 아니므로 @Immutable과 함께 사용.
+
+#JPA02. 레포지토리 메서드 작성 규칙 
+    - save() 동작 방식.
+        - 새 엔티티면 EntityManager.persist() 실행.
+        - 새 엔티티가 아니면 EntityManager.merger() 실행.
+            - select 후 insert
+        - 판단 기준
+            - Persistable을 구현한 엔티티인 경우 > isNew()로 판단.
+            - @Version 속성이 있는 경우 > 버전 값이 null이면 새 엔티티로 판단. 
+            - 식별자가 참조 타입인 경우  > 식별자가 null이면 새 엔티티로 판단.
+            - 식별자가 숫자 타입인 경우  > 식별자가 0이면 새 엔티티로 판단.
+    - 특정 조건으로 찾기.
+        - findBy프로퍼티(값)
+            - 특정 프로퍼티 값인 대상.
+            - List<User> findByName(String name);
+        - 조건 비교.
+            - List<User> findByNameLike(String name);
+            - List<User> findByCreateAtAfter(LocalDateTime time);
+        - findAll();
+            - 모두 조회.
+    - 주의
+        - findBy메서드를 남용하지 말 것.
+        - 단순한 경우에만 사용! 단순하지 않는다면. @Query
+
+#JPA03. 정렬, 페이징, @Query
+    [정렬]
+    1. find 메서드에 OrderBy 붙임
+        - List<User> findByNameLikeOrderByNameAscEmailDesc(String name);
+    2. Sort 타입 사용.
+        - List<User> findByNameLike(String name, Sort sort);
+        Sort sorts = Sort.by(Sort.Order.asc("name"), Sort.Order.desc("email"));
+        List<User> users = userRepository.findByNameLike("이름%", sorts);
+
+    [페이징]
+    1. Pageable/PageRequest 사용.
+        - List<User> findByNameLike(String name, Pageable pageable);
+        // page는 0부터 시작. 한페이지에 10개 기준으로 두번 째 페이지 조회.
+        Sort sorts = Sort.by(Sort.Order.asc("name"), Sort.Order.desc("email"));
+        Pageable pageable = PageReuqest.ofSize(10).withPage(1).withSort(sorts);
+        List<User> users = userRepository.findByNameLike("이름%", pageable);
+    2. 페이징 조회 결과 Page로 구하기.
+        - Page<User> findByEmailLike(String email, Pageable pageable);
+        Pageable pageable = PageReuqest.ofSize(10).withPage(0).withSort(sorts);
+        Page<User> page = userRepository.findByEmailLike("email%", pageable);
+        long totalElements = page.getTotalElements(); // 조건에 해당하는 전체 개수.
+        int totalPages = page.getTotalpages();        // 전체 페이지 개수.
+        List<User> content = page.getContent();       // 현재 페이지 결과 목록.
+        int size = page.getSize();                    // 페이지 크기.
+        int pageNumber = page.getNumber();            // 현재 페이지.
+        int numberOㄹElements = page.getNumberOfElements(); // content의 개수.
+    @Query
+        - 메서드 명명 규칙이 아닌 JPQL을 직접 사용.
+        - 메서드 이름이 간결해짐. 
+          @Query("select u from User u where u.createDate > :since order by u.createDate desc")
+        - List<User> findRecentUsers(@Param("since") LocalDateTime since);
+          @Query("select u from User u where u.createDate > :since")
+        - List<User> findRecentUsers(@Param("since") LocalDateTime since, Sort sort);
+          @Query("select u from User u where u.createDate > :since")
+        - List<User> findRecentUsers(@Param("since") LocalDateTime since, Pageable pageable);
+    정리
+        - 메서드 명으로 정렬 지정할 순 있지만 가능하면 Sort 사용.
+        - Pageable/PageReuqest로 페이지 처리 가능.
+            - findTop/findFirst, findTopN/findFirstN 가능.
+        - @Query를 사용해서 JPQL 지정.
+
+#JPA04. Specification을 이용한 검색 조건 지정.
+    - 검색 조건을 생성하는 인터페이스.
+    - service: SpringDataJpa04Application.java, SpecBuilder.java
+    - entity: User, UserNameSpecification, UserRepository, UserSpecs
+    - 구현
+        - 람다식을 이용해서 스펙 생성.
+            - UserNameSpecification spec = UserSpecs.nameLike("이름");
+            - List<User> users = userRepository.findAll(spec);
+        - 검색 조건 조합. or/and 메서드로 이용해서 조함.
+            - Specification<User> specs = UserSpecs.nameLike(name).and(UserSpecs.createAfter(dateTime));
+            - List<User> users = userRepository.findAll(specs);
+        - 선택적으로 조합.
+            - Specification<User> spec = Specification.where(null);
+            - spec = spec.and(UserSpecs.nameLike(name));
+
+#JPA05. 기타.
+    1. count() 메서드
+        - long count()
+        - long count(Specification<User> spec)
+        - long countNameLike(String keyword)
+    2. @Query 네이티브
+        - JPQL이 아닌 SQL 실행
+          @Query(nativeQuery=true, value="select * from user u where u.create_date >= date_sub(now(), interval 1 day)")
+        - List<User> findRecentUsers();
+    3. 한개 결과 조회.
+        - User findByName(String name)
+        - Optional<User> findByName(String name);
+        - 존재하면 해당 값, 없으면 null 또는 빈 Oprional
+        - 조회 결과 개수가 두 개 이상이면 익셉션.
+    4. 하위 Reposiroty
+        - CrudReopsitory<T, ID>
+        - PagingAndSortingRepository<T, ID>
+        - JpaRepository<T, ID>
+        - 개인적으로 Respository를 상속 받고 딱 필요한 메서드만 만드는 방법을 선호.
+
+    
+        
