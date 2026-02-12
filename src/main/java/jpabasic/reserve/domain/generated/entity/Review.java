@@ -8,16 +8,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-/**
-create table jpabegin.review (
-  review_id integer not null auto_increment,
-  hotel_id varchar(50) not null,
-  mark integer,
-  writer_name varchar(20),
-  `comment` text,
-  created datetime
-) engine innodb character set utf8mb4;
- */
 @Entity
 public class Review {
     @Id

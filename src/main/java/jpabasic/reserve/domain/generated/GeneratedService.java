@@ -55,7 +55,7 @@ public class GeneratedService {
 
 	public static void writerTest() {
 		
-		String id = "1"; 
+		String id = "4"; 
 		
 		transaction.begin();
 		
@@ -66,13 +66,13 @@ public class GeneratedService {
 			
 			Address address = new Address("address1", "address2", "zipcode"); 
 			Intro intro = new Intro("type", "내용");
-			writer = new Writer("홍길동", address, intro);
+			writer = new Writer("홍길동", address, null);
 			
 			manager.persist(writer);
 			
 		} else {
 			System.out.println("NOT NULL");
-			manager.remove(writer);
+			// manager.remove(writer);
 		}
 		
 		transaction.commit();
@@ -171,7 +171,7 @@ public class GeneratedService {
         	System.out.println("");
         	System.out.println("");
         	
-        	GeneratedService.employeeTest();
+//        	GeneratedService.employeeTest();
         	
         	GeneratedService.writerTest();
         	
