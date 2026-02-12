@@ -1,4 +1,4 @@
-package jpabasic.reserve.domain.generated.value;
+package jpabasic.reserve.domain.generated.embed;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

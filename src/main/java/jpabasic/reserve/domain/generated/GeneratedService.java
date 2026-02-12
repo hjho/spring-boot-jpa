@@ -4,14 +4,14 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
+import jpabasic.reserve.domain.generated.embed.Address;
+import jpabasic.reserve.domain.generated.embed.Grade;
+import jpabasic.reserve.domain.generated.embed.Intro;
 import jpabasic.reserve.domain.generated.entity.AccessLog;
 import jpabasic.reserve.domain.generated.entity.ActivityLog;
 import jpabasic.reserve.domain.generated.entity.Employee;
 import jpabasic.reserve.domain.generated.entity.Hotel;
 import jpabasic.reserve.domain.generated.entity.Writer;
-import jpabasic.reserve.domain.generated.value.Address;
-import jpabasic.reserve.domain.generated.value.Grade;
-import jpabasic.reserve.domain.generated.value.Intro;
 
 public class GeneratedService {
 
@@ -66,13 +66,13 @@ public class GeneratedService {
 			
 			Address address = new Address("address1", "address2", "zipcode"); 
 			Intro intro = new Intro("type", "내용");
-			writer = new Writer("홍길동", address, null);
+			writer = new Writer("홍길동", address, intro);
 			
 			manager.persist(writer);
 			
 		} else {
 			System.out.println("NOT NULL");
-			// manager.remove(writer);
+			manager.remove(writer);
 		}
 		
 		transaction.commit();

@@ -6,7 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jpabasic.reserve.domain.generated.value.Address;
+import jpabasic.reserve.domain.generated.embed.Address;
 
 @Entity
 // DB TABLE: employee(id="20260211", addr1="home1", addr2="home2", zipcode="homecode", waddr1="work1", waddr2="work1", wzipcode="workcode")

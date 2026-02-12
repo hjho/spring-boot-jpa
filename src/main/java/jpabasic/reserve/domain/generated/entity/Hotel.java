@@ -8,7 +8,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jpabasic.reserve.domain.generated.value.Grade;
+import jpabasic.reserve.domain.generated.embed.Grade;
 
 @Entity
 @Table(name = "hotel_info")

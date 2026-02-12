@@ -12,8 +12,8 @@ import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.SecondaryTable;
 import jakarta.persistence.SecondaryTables;
 import jakarta.persistence.Table;
-import jpabasic.reserve.domain.generated.value.Address;
-import jpabasic.reserve.domain.generated.value.Intro;
+import jpabasic.reserve.domain.generated.embed.Address;
+import jpabasic.reserve.domain.generated.embed.Intro;
 
 @Entity
 @Table(name = "writer")
