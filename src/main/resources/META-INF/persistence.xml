@@ -8,12 +8,17 @@
 
     <persistence-unit name="jpabegin" transaction-type="RESOURCE_LOCAL">
         <class>jpabasic.reserve.domain.User</class>
+        
         <class>jpabasic.reserve.domain.generated.entity.Employee</class>
         <class>jpabasic.reserve.domain.generated.entity.Writer</class>
         <class>jpabasic.reserve.domain.generated.entity.Hotel</class>
         <class>jpabasic.reserve.domain.generated.entity.Review</class>
         <class>jpabasic.reserve.domain.generated.entity.AccessLog</class>
         <class>jpabasic.reserve.domain.generated.entity.ActivityLog</class>
+        
+        <class>jpabasic.reserve.domain.collector.entity.Role</class>
+        <class>jpabasic.reserve.domain.collector.entity.Question</class>
+        <class>jpabasic.reserve.domain.collector.entity.Document</class>
 		
 		<!-- true - 엔티티 class 선언 필요 -->
         <!-- false - 엔티티 class 자동 검색 -->
