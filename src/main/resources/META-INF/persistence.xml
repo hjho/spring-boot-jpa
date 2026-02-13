@@ -8,6 +8,7 @@
 
     <persistence-unit name="jpabegin" transaction-type="RESOURCE_LOCAL">
         <class>jpabasic.reserve.domain.User</class>
+		<!--
         
         <class>jpabasic.reserve.domain.generated.entity.Employee</class>
         <class>jpabasic.reserve.domain.generated.entity.Writer</class>
@@ -19,6 +20,13 @@
         <class>jpabasic.reserve.domain.collector.entity.Role</class>
         <class>jpabasic.reserve.domain.collector.entity.Question</class>
         <class>jpabasic.reserve.domain.collector.entity.Document</class>
+		-->
+        
+        <class>jpabasic.reserve.domain.relation.entity.Team</class>
+        <class>jpabasic.reserve.domain.relation.entity.Player</class>
+        <class>jpabasic.reserve.domain.relation.entity.PlayerPosition</class>
+        <class>jpabasic.reserve.domain.relation.entity.PlayerCard</class>
+        <class>jpabasic.reserve.domain.relation.entity.AssignPlayer</class>
 		
 		<!-- true - 엔티티 class 선언 필요 -->
         <!-- false - 엔티티 class 자동 검색 -->
@@ -46,7 +54,7 @@
             <!-- update     : 변경 사항만 수정 / 개발 초기 단계 / 테스트 서버 -->
             <!-- validate   : 변경 사항 발생시 경고를 남기고 실행하지 않음 / 테스트 서버 / 스테이징 또는 운영 단계 -->
             <!-- none       : 자동 생성기능을 사용하지 않을 때/유효하지 않은 값 입력시 / 위 4가지 옵션을 제외한 값 / 스테이징 또는 운영 단계 -->
-            <property name="hibernate.hbm2ddl.auto" value="update" />
+            <property name="hibernate.hbm2ddl.auto" value="create" />
 
             <!-- sql log 출력 -->
             <property name="hibernate.show_sql" value="true" />
