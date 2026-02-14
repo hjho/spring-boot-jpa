@@ -11,7 +11,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jpabasic.reserve.domain.relation.value.Position;
@@ -40,7 +39,6 @@ public class Player {
     
     // optional = true 이므로 left join 으로 동작.
     @OneToOne(mappedBy = "player", cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REMOVE}, optional = true)
-    @JoinColumn(name = "player_code")
     private PlayerCard card;
     
     // fetch = FetchType.LAZY 이므로 값을 불러올 때 조회.
