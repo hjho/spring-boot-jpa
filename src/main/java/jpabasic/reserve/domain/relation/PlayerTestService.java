@@ -5,67 +5,31 @@ import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
+import jpabasic.reserve.domain.TestService;
 import jpabasic.reserve.domain.relation.entity.Player;
 import jpabasic.reserve.domain.relation.entity.PlayerCard;
 import jpabasic.reserve.domain.relation.entity.PlayerPosition;
 import jpabasic.reserve.domain.relation.value.Position;
 
-public class PlayerTestService {
-	
-	/**
-	 * hibernate.hbm2ddl.auto = update 으로 설정해서 사용. 
-	 */
-	private static void test(String name, PlayerTestService service) {
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("jpabegin");;
-		EntityManager manager = factory.createEntityManager();
-		EntityTransaction transaction = manager.getTransaction();
-		
-		try {
-			System.out.println("############### test_"+ name +" start");
-			transaction.begin();
-			System.out.println("\n\n");
-			
-			switch(name) {
-				case "persist": service.persist(manager, transaction); break;
-				case "find"   : service.find(manager, transaction); break;
-				case "change" : service.change(manager, transaction); break;
-				case "remove" : service.remove(manager, transaction); break;
-			}
-			
-			System.out.println("\n\n");
-			transaction.commit();
-			System.out.println("############### test_"+ name +" end");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            
-            System.out.println("\n\n\n ### ROLLBACK ###\n\n\n");
-            transaction.rollback();
-        } finally {
-            manager.close();
-        }
-		
-		factory.close();
-	}
+public class PlayerTestService extends TestService {
 	
 	public static void main(String[] args) {
 		
 		PlayerTestService service = new PlayerTestService();
 		
-		PlayerTestService.test("persist", service);
+		test(PERSIST, service);
 		
-		PlayerTestService.test("find", service);
+		test(FIND, service);
 		
-		PlayerTestService.test("change", service);
+		test(CHANGE, service);
 		
-		PlayerTestService.test("find", service);
+		test(FIND, service);
 		
-		PlayerTestService.test("remove", service);
+		test(REMOVE, service);
     }
 	
-	
+	@Override
 	public void persist(EntityManager manager, EntityTransaction transaction) {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
@@ -92,7 +56,7 @@ public class PlayerTestService {
 		// 3. 설정값에 따라서 position 은 별도로 persist 하여 등록헤야 함.
 	}
 	
-	
+	@Override
 	public void find(EntityManager manager, EntityTransaction transaction) {
 		
 		Player player = manager.find(Player.class, "P06");
@@ -117,6 +81,7 @@ public class PlayerTestService {
 		// [ FetchType.LAZY ] 는 값을 사용 할 때 따로 조회(영속화).
 	}
 	
+	@Override
 	public void change(EntityManager manager, EntityTransaction transaction) {
 			
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
@@ -155,6 +120,7 @@ public class PlayerTestService {
 		// merge 시 (1)과 (3)만 수정된 걸 알 수 있음.
 	}
 	
+	@Override
 	public void remove(EntityManager manager, EntityTransaction transaction) {
 			
 		Player player = manager.find(Player.class, "P06");
