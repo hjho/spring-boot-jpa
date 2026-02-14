@@ -18,6 +18,7 @@ import jpabasic.reserve.domain.relation.value.Position;
 
 
 @Entity
+// DB TABLE: player(code, name, age, created, updated)
 public class Player {
 	
     @Id 
@@ -67,11 +68,11 @@ public class Player {
     	this.card = new PlayerCard(this, cardNo, brandNm);
     }
     
-    public void changePosition(List<PlayerPosition> position) {
-    	this.position = position;
-    }
     public PlayerPosition initPosition(Position code, Long career) {
     	return new PlayerPosition(this, code, career);
+    }
+    public void changePosition(List<PlayerPosition> position) {
+    	this.position = position;
     }
     
     

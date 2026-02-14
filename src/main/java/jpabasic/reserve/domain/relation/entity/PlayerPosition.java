@@ -20,11 +20,12 @@ import jpabasic.reserve.domain.relation.value.Position;
 @IdClass(PlayerPositionKey.class)
 @Entity
 @Table(name = "player_position")
+// DB TABLE: player_position(code, career, player_code)
 public class PlayerPosition {
 	
 	@Id
 	@ManyToOne
-	@MapsId("player_code")
+	@MapsId("player_code") // 변수명(code)이 겹쳐서 별도로 지정함.
     private Player player;
 	
 	@Id
@@ -43,18 +44,17 @@ public class PlayerPosition {
     	this.career = career;
     }
     
-    public Position getCode() {
-    	return this.code;
-    }
-    
-    public Long getCareer() {
-    	return this.career;
-    }
-    
     public void changeCareer(Position code, Long career) {
     	if(this.code == code) {
     		this.career = career;
     	}
+    }
+    
+    public Position getCode() {
+    	return this.code;
+    }
+    public Long getCareer() {
+    	return this.career;
     }
     
     @Override

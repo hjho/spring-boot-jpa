@@ -16,6 +16,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "player_card")
+// DB TABLE: player_card(card_no, brand_nm, player_code)
 public class PlayerCard {
 	
 	@Id 
