@@ -6,12 +6,6 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 import jpabasic.reserve.domain.relation.entity.AssignPlayer;
 import jpabasic.reserve.domain.relation.entity.AssignPlayerKey;
-import jpabasic.reserve.domain.relation.entity.Player;
-import jpabasic.reserve.domain.relation.entity.PlayerCard;
-import jpabasic.reserve.domain.relation.entity.PlayerPosition;
-import jpabasic.reserve.domain.relation.entity.PlayerPositionKey;
-import jpabasic.reserve.domain.relation.entity.Team;
-import jpabasic.reserve.domain.relation.value.Position;
 
 public class RelationService {
 	
@@ -22,63 +16,18 @@ public class RelationService {
 	public static EntityTransaction transaction = manager.getTransaction();
 
 	
-	public static void findAssignPlayer() {
-		transaction.begin();
-		System.out.println();
-		
-		AssignPlayer player = manager.find(AssignPlayer.class, new AssignPlayerKey("T01", "P01"));
-		
-		System.out.println("findAssignPlayer");
-		System.out.println(player);
-		System.out.println();
-		
-		transaction.commit();
-	}
-	
-	public static void findPlayer() {
-		transaction.begin();
-		System.out.println();
-		
-		String playerCode = "P01";
-		
-		Player player = manager.find(Player.class, playerCode);
-
-		System.out.println("findPlayer");
-		System.out.println(player);
-		System.out.println();
-		
-		PlayerPosition position = manager.find(PlayerPosition.class, new PlayerPositionKey(playerCode, Position.F));
-		System.out.println("findPosition");
-		System.out.println(position);
-		System.out.println();
-		
-		PlayerCard card = manager.find(PlayerCard.class, playerCode);
-		System.out.println("findCard");
-		System.out.println(card);
-		System.out.println();
-		
-		transaction.commit();
-	}
-	
 	public static void main(String[] args) {
         
         try {
-        	System.out.println("===========================");
+        	System.out.println("===========================" );
         	System.out.println("");
         	System.out.println("");
+
+//        	RelationService.init_data_setting();
         	
-        	RelationService.init_data_setting();
-        	System.out.println("");
-        	System.out.println("");
-        	System.out.println("");
-        	System.out.println("");
-        	System.out.println("");
-        	System.out.println("");
-        	System.out.println("");
+//        	RelationService.find_assign_player();
         	
-        	RelationService.findAssignPlayer();
-        	
-        	RelationService.findPlayer();
+//        	RelationService.update_player();
         	
         	System.out.println("");
         	System.out.println("");
@@ -99,11 +48,30 @@ public class RelationService {
         factory.close();
     }
 	
+	public static void find_assign_player() {
+		transaction.begin();
+		System.out.println();
+		
+		AssignPlayer assignPlayer = manager.find(AssignPlayer.class, new AssignPlayerKey("T02", "P03"));
+		
+		System.out.println("\n\nfindAssignPlayer");
+		System.out.println(assignPlayer);
+//		System.out.println(player.getPlayer().getCard());
+//		System.out.println(player.getPlayer().getPosition());
+		System.out.println();
+		
+		transaction.commit();
+	}
 	
+	
+	/*
 	public static void init_data_setting() {
 		System.out.println("START   init_data_setting");
 		
 		transaction.begin();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+		String now = sdf.format(new Date());
 		
 		Team team1 = new Team("T01", "땅");
 		Team team2 = new Team("T02", "바다");
@@ -113,11 +81,11 @@ public class RelationService {
 		manager.persist(team2);
 		manager.persist(team3);
 		
-		Player player1 = new Player("P01", "호랑이");
-		Player player2 = new Player("P02", "사자");
-		Player player3 = new Player("P03", "고래");
-		Player player4 = new Player("P04", "상어");
-		Player player5 = new Player("P05", "독수리");
+		Player player1 = new Player("P01", "호랑이", 33L, now, now);
+		Player player2 = new Player("P02", "사자", 55L, now, now);
+		Player player3 = new Player("P03", "고래", 21L, now, now);
+		Player player4 = new Player("P04", "상어", 48L, now, now);
+		Player player5 = new Player("P05", "독수리", 50L, now, now);
 		
 		manager.persist(player1);
 		manager.persist(player2);
@@ -168,6 +136,6 @@ public class RelationService {
 		
 		transaction.commit();
 		System.out.println("END     init_data_setting");
-	}
+	}*/
 
 }

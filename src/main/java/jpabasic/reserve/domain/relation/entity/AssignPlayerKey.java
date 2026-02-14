@@ -1,6 +1,7 @@
 package jpabasic.reserve.domain.relation.entity;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 
 public class AssignPlayerKey implements Serializable {
@@ -24,6 +25,19 @@ public class AssignPlayerKey implements Serializable {
     
     public String getPlayer() {
     	return player;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AssignPlayerKey that = (AssignPlayerKey) o;
+        return Objects.equals(team, that.team) && Objects.equals(player, that.player);
+    }
+
+    @Override	
+    public int hashCode() {
+        return Objects.hash(team, player);
     }
     
 }

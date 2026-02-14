@@ -1,5 +1,8 @@
 package jpabasic.reserve.domain.relation.entity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.google.gson.Gson;
 
 import jakarta.persistence.Column;
@@ -18,12 +21,12 @@ import jakarta.persistence.Table;
 public class AssignPlayer {
 	
 	@Id
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@MapsId
 	private Team team;
 	
 	@Id
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@MapsId
 	private Player player;
 	
@@ -60,6 +63,12 @@ public class AssignPlayer {
     
     @Override
     public String toString() {
-        return new Gson().toJson(this);
+    	Gson g = new Gson();
+    	Map<String, Object> map = new HashMap<>();
+    	map.put("team", g.fromJson(team.toString(), Team.class));
+    	map.put("player", g.fromJson(player.toString(), Player.class));
+    	map.put("backNo", backNo);
+    	map.put("nickName", nickName);
+    	return g.toJson(map);
     }
 }

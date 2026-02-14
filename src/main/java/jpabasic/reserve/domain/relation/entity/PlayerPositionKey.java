@@ -1,6 +1,7 @@
 package jpabasic.reserve.domain.relation.entity;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import jpabasic.reserve.domain.relation.value.Position;
 
@@ -26,6 +27,19 @@ public class PlayerPositionKey implements Serializable  {
     
     public Position getCode() {
     	return this.code;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlayerPositionKey that = (PlayerPositionKey) o;
+        return Objects.equals(player, that.player) && Objects.equals(code, that.code);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(player, code);
     }
     
 }

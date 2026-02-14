@@ -37,7 +37,7 @@ public class PlayerPosition {
     
     
     protected PlayerPosition() {}
-    public PlayerPosition(Player player, Position code, Long career) {
+    protected PlayerPosition(Player player, Position code, Long career) {
     	this.player = player;
     	this.code = code;
     	this.career = career;
@@ -51,9 +51,16 @@ public class PlayerPosition {
     	return this.career;
     }
     
+    public void changeCareer(Position code, Long career) {
+    	if(this.code == code) {
+    		this.career = career;
+    	}
+    }
+    
     @Override
     public String toString() {
     	Map<String, Object> map = new HashMap<>();
+    	map.put("playerCode", player.getCode());
     	map.put("code", code);
     	map.put("career", career);
         return new Gson().toJson(map);
