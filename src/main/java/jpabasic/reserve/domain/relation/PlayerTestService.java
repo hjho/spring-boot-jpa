@@ -92,10 +92,9 @@ public class PlayerTestService extends TestService {
 		// player.card 영속화.
 		PlayerCard card = player.getCard();
 		List<PlayerPosition> positions = player.getPosition();
-		positions.forEach((position) -> {
-			// player.position 영속화.
-			System.out.println(position);
-		});
+		// position 은 LAZY 라 값을 써야 영속화 됨.
+		// 영속화가 되기 전에 detach 하고 값을 사용하려하면 에러발생!
+		System.out.println("positions: " + positions.size());
 		
 		// player 를 준영속 상태로 변경하고
 		// 설정에 따라 card 와 positions 도 준영속 상태로 변경.
@@ -118,6 +117,9 @@ public class PlayerTestService extends TestService {
 		// 2. {"brandNm":"썬카드","playerCode":"P06","cardNo":"9876"}
 		// 3. [{"career":2,"code":"D","playerCode":"P06"}, {"career":5,"code":"F","playerCode":"P06"}]
 		// merge 시 (1)과 (3)만 수정된 걸 알 수 있음.
+		
+		// detach: 영속성 컨텍스트에서 분리 시 자식도 분리. 
+		// merge : 준영속 상태의 부모를 다시 영속화할 때 자식도 함께 영속 상태로 병합하는 기능.
 	}
 	
 	@Override
