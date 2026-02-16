@@ -1,6 +1,6 @@
 package jpabasic.reserve.domain.relation.entity;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.google.gson.Gson;
@@ -45,6 +45,18 @@ public class AssignPlayer {
         this.nickName = nickName;
     }
     
+    public void changeBackNo(Long backNo) {
+    	this.backNo = backNo;
+    }
+    public void changeNickName(String nickName) {
+    	this.nickName = nickName;
+    }
+    // 기본키 객체는 변경안됨. 있으면 안됨.
+    @Deprecated
+    public void changeTeam(Team team) {
+    	this.team = team;
+    }
+    
     public Team getTeam() {
     	return team;
     }
@@ -64,7 +76,7 @@ public class AssignPlayer {
     @Override
     public String toString() {
     	Gson g = new Gson();
-    	Map<String, Object> map = new HashMap<>();
+    	Map<String, Object> map = new LinkedHashMap<String, Object>();
     	map.put("team", g.fromJson(team.toString(), Team.class));
     	map.put("player", g.fromJson(player.toString(), Player.class));
     	map.put("backNo", backNo);

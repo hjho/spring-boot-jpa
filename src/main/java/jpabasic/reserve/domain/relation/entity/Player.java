@@ -65,14 +65,14 @@ public class Player {
     public void setCard(String cardNo, String brandNm) {
     	this.card = new PlayerCard(this, cardNo, brandNm);
     }
-    
+    // 등록할 때, CascadeType.PERSIST 아니면 등록 안됨.
+    @Deprecated
+    public void setPosition(List<PlayerPosition> position) {
+    	this.position = position;
+    }
     public PlayerPosition initPosition(Position code, Long career) {
     	return new PlayerPosition(this, code, career);
     }
-    public void changePosition(List<PlayerPosition> position) {
-    	this.position = position;
-    }
-    
     
     public String getCode() {
     	return code;

@@ -45,8 +45,8 @@ public class PlayerTestService extends TestService {
 		// 3. cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REMOVE}.
 		PlayerPosition ps1 = player6.initPosition(Position.F, 5L);
 		PlayerPosition ps2 = player6.initPosition(Position.D, 1L);
-		// player6.changePosition(Arrays.asList(ps1, ps2));
-		// ㄴPERSIST 일 때에는 DB Insert 됨.
+		// player6.setPosition(Arrays.asList(ps1, ps2));
+		// ㄴCascadeType.PERSIST 일 때에는 DB Insert 됨.
 		
 		manager.persist(ps1);
 		manager.persist(ps2);

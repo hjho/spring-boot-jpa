@@ -14,6 +14,7 @@ public abstract class TestService {
 	public static final String FIND    = "find"; 
 	public static final String CHANGE  = "change"; 
 	public static final String REMOVE  = "remove"; 
+	public static final String CREATE  = "create"; 
 	public static final String INIT    = "init"; 
 	
 	public void persist(EntityManager manager, EntityTransaction transaction) {}
@@ -24,7 +25,11 @@ public abstract class TestService {
 	
 	public void remove(EntityManager manager, EntityTransaction transaction) {}
 	
+	public void create(EntityManager manager, EntityTransaction transaction) {}
+	
 	public void init(EntityManager manager, EntityTransaction transaction) {}
+	
+	public void my_function(String name, EntityManager manager, EntityTransaction transaction) {}
 	
 	
 	public static void test(String name, TestService service) {
@@ -40,7 +45,11 @@ public abstract class TestService {
 				System.out.println("\nONLY INIT TEST");
 				System.out.println(" - please change 'hibernate.hbm2ddl.auto' to 'update'\n");
 				
-				service.init(manager, transaction);
+				transaction.begin();
+				
+				service.create(manager, transaction);
+				
+				transaction.commit();
 				
 			} else {
 				
@@ -53,8 +62,8 @@ public abstract class TestService {
 					case FIND   : service.find(manager, transaction); break;
 					case CHANGE : service.change(manager, transaction); break;
 					case REMOVE : service.remove(manager, transaction); break;
-					case INIT   : 
-						 default: service.init(manager, transaction); break;
+					case INIT   : service.init(manager, transaction); break;
+					default     : service.my_function(name, manager, transaction); break;
 				}
 				
 				System.out.println("\n\n");
