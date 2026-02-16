@@ -10,12 +10,17 @@ import jakarta.persistence.Persistence;
 
 public abstract class TestService {
 	
+	public static final String CREATE  = "create";
+	
 	public static final String PERSIST = "persist"; 
 	public static final String FIND    = "find"; 
 	public static final String CHANGE  = "change"; 
-	public static final String REMOVE  = "remove"; 
-	public static final String CREATE  = "create"; 
+	public static final String REMOVE  = "remove";
+	public static final String REFRESH = "refresh";
+	
 	public static final String INIT    = "init"; 
+	
+	public void create(EntityManager manager, EntityTransaction transaction) {}
 	
 	public void persist(EntityManager manager, EntityTransaction transaction) {}
 	
@@ -25,7 +30,7 @@ public abstract class TestService {
 	
 	public void remove(EntityManager manager, EntityTransaction transaction) {}
 	
-	public void create(EntityManager manager, EntityTransaction transaction) {}
+	public void refresh(EntityManager manager, EntityTransaction transaction) {}
 	
 	public void init(EntityManager manager, EntityTransaction transaction) {}
 	

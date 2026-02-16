@@ -36,9 +36,6 @@ public class AssignPlayerTestService extends TestService {
 		test(CHANGE, service);
 		test("find_one", service);
 		
-		// test("change_pk", service);
-		// test("remove_team", service);
-		
 		test(REMOVE , service);
     }
 	
@@ -46,8 +43,6 @@ public class AssignPlayerTestService extends TestService {
 	public void my_function(String name, EntityManager manager, EntityTransaction transaction) {
 		switch (name) {
 			case "find_one": this.find_one(manager, transaction); break;
-			case "change_pk": this.change_pk(manager, transaction); break;
-			case "remove_team": this.remove_team(manager, transaction); break;
 			default: break;
 		}
 	}
@@ -248,31 +243,5 @@ public class AssignPlayerTestService extends TestService {
 		System.out.println("5. " + assign5);
 		// 5. {"team":{"code":"T01","name":"땅"},"player":{"code":"P05","name":"독수리","age":50,"created":"2026.02.16 15:31:53"},"backNo":1,"nickName":"흰머리수리"}
 	}
-	
-	@SuppressWarnings("deprecation")
-	public void change_pk(EntityManager manager, EntityTransaction transaction) {
-		
-		Team team2 = manager.find(Team.class, "T02");
-		
-		AssignPlayer assign5 = manager.find(AssignPlayer.class, new AssignPlayerKey("T01", "P05"));
-		
-		assign5.changeTeam(team2);
-		
-		// Caused by: jakarta.persistence.PersistenceException: Converting `org.hibernate.HibernateException` to JPA `PersistenceException`
-		// Caused by: org.hibernate.HibernateException:  identifier of an instance of [AssignPlayer] was altered from [AssignPlayerKey@281f80] to [AssignPlayerKey@281f61]
-		// JPA/Hibernate 영속성 컨텍스트(Persistence Context)에서 관리되는 엔티티의 식별자(PK) 값을 변경하려고 할 때 발생하는 전형적인 문제.
-		// 식별자 수정 금지 및 삭제 후 재생성.
-	}
-	
-	public void remove_team(EntityManager manager, EntityTransaction transaction) {
-		Team team2 = manager.find(Team.class, "T02");
-		
-		manager.remove(team2);
-		
-		// Cannot delete or update a parent row: a foreign key constraint fails
-		//  (`jpabegin`.`assign_player`, CONSTRAINT `FKdd3aeg98xdbilsovc8ybnkndo` FOREIGN KEY (`team_code`) REFERENCES `team` (`code`))
-		// 상위 행을 삭제하거나 업데이트할 수 없습니다: 외부 키 제약 조건이 실패합니다
-	}
-	
 	
 }

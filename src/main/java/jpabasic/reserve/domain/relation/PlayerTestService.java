@@ -118,8 +118,11 @@ public class PlayerTestService extends TestService {
 		// 3. [{"career":2,"code":"D","playerCode":"P06"}, {"career":5,"code":"F","playerCode":"P06"}]
 		// merge 시 (1)과 (3)만 수정된 걸 알 수 있음.
 		
-		// detach: 영속성 컨텍스트에서 분리 시 자식도 분리. 
-		// merge : 준영속 상태의 부모를 다시 영속화할 때 자식도 함께 영속 상태로 병합하는 기능.
+		// persist: 부모 엔티티를 저장(em.persist(parent))할 때, 자식 엔티티들도 자동으로 persist() 하는 기능.
+		// remove: 부모 엔티티를 저장(em.remove(parent))할 때, 자식 엔티티들도 자동으로 remove() 하는 기능.
+		// refresh: 부모 엔티티를 새로 고침할 때, 연관된 자식 엔티티들까지 함께 데이터베이스에서 새로고침(DB로부터 다시 조회)하는 옵션.
+		// detach: 영속성 컨텍스트에서 분리 시 자식도 분리하는 옵션. 
+		// merge : 준영속 상태의 부모를 다시 영속화할 때 자식도 함께 영속 상태로 병합하는 옵션.
 	}
 	
 	@Override
