@@ -88,4 +88,8 @@ RelationTestService
 * 제약조건에 따른 수정, 삭제 에러 상황.
 * CascadeType.REFRESH
 
+CategoryTestService
+* 계층형 테이블의 구조 및 등록, 조회, 수정, 삭제 테스트.
+* clearAndAddChildren() 이용해서 삭제해야 함.
+
 
