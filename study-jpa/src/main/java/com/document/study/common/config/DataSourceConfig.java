@@ -1,17 +1,11 @@
 package com.document.study.common.config;
 
-import javax.sql.DataSource;
-
-import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
-import org.springframework.boot.jpa.autoconfigure.JpaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -40,24 +34,24 @@ public class DataSourceConfig {
 		return DataSourceBuilder.create().type(HikariDataSource.class).build();
 	}
 	
-	@Bean LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, JpaProperties jpaProperties) {
-		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-		vendorAdapter.setDatabase(jpaProperties.getDatabase());
-		vendorAdapter.setDatabasePlatform(jpaProperties.getDatabasePlatform());
-		vendorAdapter.setGenerateDdl(jpaProperties.isGenerateDdl());
-		vendorAdapter.setShowSql(jpaProperties.isShowSql());
-		
-		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-		factory.setJpaVendorAdapter(vendorAdapter);
-		factory.setPackagesToScan("com.document.study.jpa.entity");
-		factory.setDataSource(dataSource);
-		factory.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-		factory.setPersistenceUnitName("jpabegin");
-		factory.setJpaPropertyMap(jpaProperties.getProperties());
-		
-		log.debug("## JPA_PROPERTIES: {}", jpaProperties.getProperties());
-		return factory;
-	}
+//	@Bean LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, JpaProperties jpaProperties) {
+//		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+//		vendorAdapter.setDatabase(jpaProperties.getDatabase());
+//		vendorAdapter.setDatabasePlatform(jpaProperties.getDatabasePlatform());
+//		vendorAdapter.setGenerateDdl(jpaProperties.isGenerateDdl());
+//		vendorAdapter.setShowSql(jpaProperties.isShowSql());
+//		
+//		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+//		factory.setJpaVendorAdapter(vendorAdapter);
+//		factory.setPackagesToScan("com.document.study.jpa.entity");
+//		factory.setDataSource(dataSource);
+//		factory.setPersistenceProviderClass(HibernatePersistenceProvider.class);
+//		factory.setPersistenceUnitName("jpabegin");
+//		factory.setJpaPropertyMap(jpaProperties.getProperties());
+//		
+//		log.debug("## JPA_PROPERTIES: {}", jpaProperties.getProperties());
+//		return factory;
+//	}
 	
 	@Bean PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
 		JpaTransactionManager txManager = new JpaTransactionManager();
