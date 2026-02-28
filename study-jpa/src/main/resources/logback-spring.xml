@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     
-    <jmxConfigurator/>
     <include resource="org/springframework/boot/logging/logback/defaults.xml" />
     <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
     
-    <property name="LOG_PATTERN" 
-              value="%highlight([%d{yyyy-MM-dd HH:mm:ss.SSS}][%-18.-18thread][%-40.40logger][%4L][%-1.-1p] %m%n)" />
-              
-    <property name="TRNS_DIR_PATH_DEV" value="D://Program/logs_dev/blog" />
-    <property name="PROJECT_NAME" value="study_jpa" />
+    <property name="LOG_PATTERN" value="%highlight([%d{yyyy-MM-dd HH:mm:ss.SSS}][%-18.-18thread][%-40.40logger][%4L][%-1.-1p] %m%n)" />
+    
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
  
+<!--
+    <property name="TRNS_DIR_PATH_DEV" value="D://workspace_log/study/jpa" />
+    <property name="PROJECT_NAME" value="study_jpa" />
+    
     <appender name="SAMPLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-4relative][%-30C][%-5level]%M{35}%L : %m%n</pattern>
         </encoder>
     </appender>
-    
-    <!-- New Pattern -->
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>${LOG_PATTERN}</pattern>
-        </layout>
-    </appender>
+
     <appender name="TRNSFILE_DEV" class="ch.qos.logback.core.rolling.RollingFileAppender">
     	<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
     		<fileNamePattern>${TRNS_DIR_PATH_DEV}/${PROJECT_NAME}_%d{yyyy-MM-dd_HH}.%i.log</fileNamePattern>
@@ -35,7 +34,6 @@
     	</encoder>
     </appender>
     
-    <!-- Dev Application Logger -->
     <springProfile name="dev">
     	<logger name="com.document.study" level="DEBUG" additivity="false">
     		<appender-ref ref="TRNSFILE_DEV" />
@@ -47,7 +45,7 @@
 	        <appender-ref ref="TRNSFILE_DEV" />
 	    </logger>
     </springProfile>
-    
+-->
     
     <logger name="com.document.study" level="DEBUG" additivity="false">
    		<appender-ref ref="CONSOLE" />
@@ -82,9 +80,11 @@
     <logger name="org.hibernate.jpa" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE" />
     </logger>
-    <logger name="org.hibernate.sql" level="DEBUG" additivity="false">
+    <!--
+    <logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE" />
     </logger>
+    -->
     <logger name="org.hibernate.resource.transaction" level="TRACE" additivity="false">
 		<appender-ref ref="CONSOLE" />
     </logger>

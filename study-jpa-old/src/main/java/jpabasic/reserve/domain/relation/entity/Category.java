@@ -68,8 +68,8 @@ public class Category {
     	return children.remove(category);
     }
     public boolean clearAndAddChildren(List<Category> children) {
-    	children.clear();
-    	return children.addAll(children);
+    	this.children.clear();
+    	return this.children.addAll(children);
     }
     public Long getCode() {
     	return code;
