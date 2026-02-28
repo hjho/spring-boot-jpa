@@ -51,6 +51,9 @@ public class PlayerService {
 	 *  왜 반대ㅠ
 	 *  
 	 * JPA의 save()는 엔티티의 ID가 null 이면 persist, null 이 아니면 merge 를 호출.
+	 *    - @Version 속성이 있는 경우 > 버전 값이 null 이면 새 엔티티로 판단. 
+     *    - 식별자가 참조 타입인 경우  > 식별자가 null 이면 새 엔티티로 판단.
+     *    - 식별자가 숫자 타입인 경우  > 식별자가 0이면 새 엔티티로 판단.
 	 *   그러나 ID의 생성 전략이 @GeneratedValue가 아니고, 로직에서 ID 값을 직접 설정하는 경우가 있다면, 
 	 *   이는 JpaRepository에서 신규 엔티티로 인식되지 않을 수 있다. 
 	 *   이 경우, JpaRepository.save()는 엔티티가 이미 존재한다고 판단하고 merge()를 호출함.
