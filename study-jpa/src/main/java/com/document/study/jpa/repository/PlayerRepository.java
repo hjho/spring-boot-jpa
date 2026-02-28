@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.document.study.jpa.entity.Player;
-import com.document.study.jpa.immutable.PlayerReadOnly;
+import com.document.study.jpa.immutable.PlayerVO;
 
 public interface PlayerRepository extends JpaRepository<Player, String>, PlayerRepositoryCustom {
 
@@ -26,7 +26,7 @@ public interface PlayerRepository extends JpaRepository<Player, String>, PlayerR
 			    ON p.code = s.player_code 
 			 GROUP BY p.code 
 			""")
-	List<PlayerReadOnly> findQuery();
+	List<PlayerVO> findQuery();
 
 	
 	@Query(nativeQuery = true, value = """
@@ -44,6 +44,6 @@ public interface PlayerRepository extends JpaRepository<Player, String>, PlayerR
 			 WHERE p.code = :player_code
 			 GROUP BY p.code 
 			""")
-	PlayerReadOnly findQueryOne(@Param("player_code") String code);
+	PlayerVO findQueryOne(@Param("player_code") String code);
 	
 }

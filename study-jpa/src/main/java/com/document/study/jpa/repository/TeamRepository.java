@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.document.study.jpa.entity.Team;
-import com.document.study.jpa.immutable.TeamReadOnly;
+import com.document.study.jpa.immutable.TeamVO;
 
 public interface TeamRepository extends JpaRepository<Team, String> {
 
@@ -22,7 +22,7 @@ public interface TeamRepository extends JpaRepository<Team, String> {
 			  left join jpabegin.team_info ti 
 			    on t.code = ti.team_code  
 			""")
-	List<TeamReadOnly> findQuery();
+	List<TeamVO> findQuery();
 	
 	
 	@Query(nativeQuery = true, value = """
@@ -37,5 +37,5 @@ public interface TeamRepository extends JpaRepository<Team, String> {
 			    on t.code = ti.team_code
 			 where t.code = :team_code
 			""")
-	TeamReadOnly findQueryOne(@Param("team_code") String code);
+	TeamVO findQueryOne(@Param("team_code") String code);
 }

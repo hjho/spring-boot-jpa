@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.document.study.jpa.entity.Player;
-import com.document.study.jpa.immutable.PlayerReadOnly;
+import com.document.study.jpa.immutable.PlayerVO;
 import com.document.study.jpa.repository.PlayerRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -29,10 +29,10 @@ public class PlayerCustomService {
 	}
 	
 	
-	public List<PlayerReadOnly> query() {
+	public List<PlayerVO> query() {
 		return playerRepository.findQuery();
 	}
-	public PlayerReadOnly queryOne(String code) {
+	public PlayerVO queryOne(String code) {
 		return playerRepository.findQueryOne(code);
 	}
 	

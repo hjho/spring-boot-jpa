@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.document.study.jpa.entity.Player;
-import com.document.study.jpa.immutable.PlayerReadOnly;
+import com.document.study.jpa.immutable.PlayerVO;
 import com.document.study.jpa.service.PlayerCustomService;
 
 import lombok.RequiredArgsConstructor;
@@ -51,12 +51,12 @@ public class PlayerCustomContoller {
 	
 	
 	@GetMapping("/query")
-	public ResponseEntity<List<PlayerReadOnly>> query() {
-		return new ResponseEntity<List<PlayerReadOnly>>(playerCustomService.query(), CODE_200);
+	public ResponseEntity<List<PlayerVO>> query() {
+		return new ResponseEntity<List<PlayerVO>>(playerCustomService.query(), CODE_200);
 	}
 	@GetMapping("/query/{code}")
-	public ResponseEntity<PlayerReadOnly> queryOne(@PathVariable String code) {
-		return new ResponseEntity<PlayerReadOnly>(playerCustomService.queryOne(code), CODE_200);
+	public ResponseEntity<PlayerVO> queryOne(@PathVariable String code) {
+		return new ResponseEntity<PlayerVO>(playerCustomService.queryOne(code), CODE_200);
 	}
 	
 	
