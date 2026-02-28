@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.document.study.jpa.entity.Team;
+import com.document.study.jpa.immutable.TeamReadOnly;
 import com.document.study.jpa.repository.TeamRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -49,6 +50,16 @@ public class TeamContoller {
 			return new ResponseEntity<Team>(CODE_500);
 		}
 		return new ResponseEntity<Team>(team.get(), CODE_200);
+	}
+	
+	@GetMapping("/query")
+	public ResponseEntity<List<TeamReadOnly>> query() {
+		return new ResponseEntity<List<TeamReadOnly>>(teamRepository.findQuery(), CODE_200);
+	}
+	
+	@GetMapping("/query/{code}")
+	public ResponseEntity<TeamReadOnly> queryOne(@PathVariable String code) {
+		return new ResponseEntity<TeamReadOnly>(teamRepository.findQueryOne(code), CODE_200);
 	}
 
 	
