@@ -18,6 +18,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class PlayerCustomService {
 	
+	/**
+	 * {@link com.document.study.jpa.repository.PlayerRepositoryImpl PlayerRepositoryImpl.java}
+	 */
 	private final PlayerRepository playerRepository;
 
 

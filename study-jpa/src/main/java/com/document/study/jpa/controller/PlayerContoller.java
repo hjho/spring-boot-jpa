@@ -50,8 +50,10 @@ public class PlayerContoller {
 	 *  Player 엔티티를 가져온 시점에는 position 컬렉션이 프록시 객체로 채워져 있었지만
 	 *  이후 position 에 접근할 때 이미 트랜잭션이 끝나 세션이 닫혀(no Session) 실제 데이터를 가져오지 못하는 상황
 	 *  
-	 *  @Transactional 을 이용하여 세션을 유지한 상태로 Lazy 조회해서 해결.
-	 *  propagation = Propagation.SUPPORTS 으로 트랜잭션이 없으면 같은 오류 발생.
+	 *  @Transactional 을 이용하여 세션을 유지한 상태로 Player.position을 조회하여 Lazy 로딩 해결.
+	 *    - propagation = Propagation.SUPPORTS 으로 트랜잭션이 없으면 같은 오류 발생.
+	 *    
+	 *  spring.jpa.open-in-view: true 일 경우. 상관 없음. (default)
 	 */
 	@GetMapping("/find/{code}")
 	public ResponseEntity<Player> find(@PathVariable String code) {

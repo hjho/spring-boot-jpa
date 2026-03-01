@@ -1,6 +1,6 @@
 package com.document.study.jpa.immutable;
 
-import org.springframework.data.annotation.Immutable;
+import org.hibernate.annotations.Immutable;
 
 import com.fasterxml.jackson.annotation.JsonRawValue;
 
