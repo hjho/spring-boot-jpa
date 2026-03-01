@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.document.study.jpa.entity.AssignPlayer;
-import com.document.study.jpa.entity.AssignPlayerView;
 import com.document.study.jpa.immutable.AssignPlayerVO;
 import com.document.study.jpa.service.AssignPlayerService;
 
@@ -52,12 +51,6 @@ public class AssignPlayerContoller {
 			@RequestParam(required = false) String team, @RequestParam(required = false) String player
 	) {
 		return new ResponseEntity<List<AssignPlayerVO>>(assignPlayerService.findQueryDynamic(team, player), CODE_200);
-	}
-	
-	
-	@GetMapping("/find/sub-select")
-	public ResponseEntity<List<AssignPlayerView>> findSubSelect() {
-		return new ResponseEntity<List<AssignPlayerView>>(assignPlayerService.findSubSelect(), CODE_200);
 	}
 	
 }

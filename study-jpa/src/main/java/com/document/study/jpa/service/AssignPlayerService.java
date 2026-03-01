@@ -7,10 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.document.study.jpa.entity.AssignPlayer;
-import com.document.study.jpa.entity.AssignPlayerView;
 import com.document.study.jpa.immutable.AssignPlayerVO;
 import com.document.study.jpa.repository.AssignPlayerRepository;
-import com.document.study.jpa.repository.AssignPlayerViewRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,8 +24,6 @@ public class AssignPlayerService {
 	 */
 	private final AssignPlayerRepository assignPlayerRepository;
 	
-	private final AssignPlayerViewRepository assignPlayerViewRepository;
-
 	
 	public List<AssignPlayer> findQueryAll() {
 		return assignPlayerRepository.findQueryAll();
@@ -64,10 +60,4 @@ public class AssignPlayerService {
 	}
 	
 	
-	
-	
-
-	public List<AssignPlayerView> findSubSelect() {
-		return assignPlayerViewRepository.findAll();
-	}
 }
