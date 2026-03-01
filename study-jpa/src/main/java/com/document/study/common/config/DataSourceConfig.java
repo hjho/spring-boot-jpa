@@ -15,8 +15,10 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.zaxxer.hikari.HikariDataSource;
 
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.extern.slf4j.Slf4j;
 
@@ -62,6 +64,11 @@ public class DataSourceConfig {
 		// ## JPA_PROPERTIES: {hibernate.format_sql=true, hibernate.physical_naming_strategy=org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy, hibernate.hbm2ddl.auto=validate}
 		return factory;
 	}
+
+	
+	@Bean JPAQueryFactory jpaQueryFactory(EntityManager entityManager) {
+        return new JPAQueryFactory(entityManager);
+    }
 	
 	
 	@Bean PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
