@@ -1,7 +1,5 @@
 package com.document.study.jpa.immutable;
 
-import org.hibernate.annotations.Immutable;
-
 import com.fasterxml.jackson.annotation.JsonRawValue;
 
 import jakarta.persistence.Id;
@@ -11,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Immutable
 @Getter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
