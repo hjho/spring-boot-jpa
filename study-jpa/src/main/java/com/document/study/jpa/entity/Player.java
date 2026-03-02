@@ -5,7 +5,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+import org.springframework.data.domain.Persistable;
+
 import com.document.study.jpa.embed.Position;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -15,6 +19,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PostLoad;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Transient;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,7 +34,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Player {
+public class Player implements Persistable<String> {
 	
     @Id
     private String code;
@@ -81,5 +88,25 @@ public class Player {
     public PlayerPosition initPosition(Position code, Long career) {
     	return PlayerPosition.builder().player(this).code(code).career(career).build();
     }
+
     
+    @Transient
+    private boolean isNew = true;
+    
+	@Override
+	public @Nullable String getId() {
+		return this.code;
+	}
+
+	@JsonIgnore
+	@Override
+	public boolean isNew() {
+		return isNew;
+	}
+	
+	@PostLoad
+    @PrePersist
+    void markNotNew() {
+        this.isNew = false;
+    }
 }
