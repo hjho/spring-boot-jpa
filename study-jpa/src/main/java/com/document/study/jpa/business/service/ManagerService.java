@@ -98,11 +98,12 @@ public class ManagerService {
 	
 	@Transactional
 	public @Nullable Boolean change() {
-		Manager manager = managerRepository.findByName("choi.00");
+		Manager manager = managerRepository.findByName("choi.01");
 		if(manager != null) {
-			manager.changeEmail("choi.00@study.com");
+//			manager.changeEmail("choi.00@study.com");
 			// @LastModifiedBy, @LastModifiedDate
 			// 두 값도 자동으로 수정됨.
+			manager.changeBirthday(LocalDate.of(1995, 4, 21));
 		}
 		log.debug("### manager: {}", manager);
 		return true;

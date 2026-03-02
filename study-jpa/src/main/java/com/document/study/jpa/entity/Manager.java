@@ -47,14 +47,13 @@ public class Manager {
 	
 	private String name;
 	
-	@Column(length = 8)
 	private LocalDate birthday;
 	
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
 	
 	@Column(name = "is_foreigner")
-	private boolean foreigner;
+	private Boolean foreigner;
 	
 	private String email;
 	
@@ -74,12 +73,20 @@ public class Manager {
 		this.email = email;
 	}
 	
+	public void changeBirthday(LocalDate birthday) {
+		this.birthday = birthday;
+	}
+	
     public Manager(String name, String email, LocalDate birthday, Gender gender, boolean foreigner) {
 		this.name = name;
 		this.email = email;
 		this.birthday = birthday;
 		this.gender = gender;
 		this.foreigner = foreigner;
+    }
+    
+    public Manager(Gender gender) {
+    	this.gender = gender;
     }
 	
 }
