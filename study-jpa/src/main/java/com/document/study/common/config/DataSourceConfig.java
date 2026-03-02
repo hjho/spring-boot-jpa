@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Configuration(proxyBeanMethods = false)
 @EnableJpaRepositories(
-		basePackages = { "com.document.study.jpa.repository" },
+		basePackages = { "com.document.study.jpa" },
 		entityManagerFactoryRef = "entityManagerFactory",
 		transactionManagerRef = "transactionManager"
 	)

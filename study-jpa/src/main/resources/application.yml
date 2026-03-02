@@ -44,7 +44,7 @@ spring:
         hbm2ddl.auto: validate    # 엔티티와 DB 매핑만 검증.
 #        hbm2ddl.auto: none        # 아무 작업 안 함 (기본값)
 #        hbm2ddl.auto: update      # 변경된 스키마 반영.
-#        hbm2ddl.auto: update      # 기존 테이블 삭제 후 다시 생성.
+#        hbm2ddl.auto: create      # 기존 테이블 삭제 후 다시 생성.
 #        hbm2ddl.auto: create-drop # 시작 시 생성, 종료 시 삭제.
 
         # JPA 엔티티의 논리적 이름을 실제 DB 테이블/컬럼명(물리명)으로 변환하는 전략을 설정.
@@ -60,7 +60,7 @@ spring:
         
 # SWAGGER
 springdoc: 
-  packages-to-scan: com.document.study.jpa.controller
+  packages-to-scan: com.document.study.jpa.business.controller
   # packages-to-exclude: com.prjt.blog.sub.controller 
   # paths-to-match: /api-v1/**
   # paths-to-exclude: /api-v1/common/voca/**
