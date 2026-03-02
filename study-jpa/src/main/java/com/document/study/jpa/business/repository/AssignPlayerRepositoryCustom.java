@@ -2,16 +2,21 @@ package com.document.study.jpa.business.repository;
 
 import java.util.List;
 
+import com.document.study.jpa.business.controller.data.AssignPlayerPDto;
+import com.document.study.jpa.business.controller.data.AssignPlayerRDto;
+import com.document.study.jpa.business.controller.data.AssignPlayerVO;
 import com.document.study.jpa.entity.AssignPlayer;
 
 public interface AssignPlayerRepositoryCustom {
 	
-	List<AssignPlayer> findQueryDslAll();
 	
 	AssignPlayer findQueryDslOne(String team, String player);
 	
-	List<AssignPlayer> findQueryDslJoin();
 	
-	List<AssignPlayer> findQueryDslDynamic(String team, String player);
+	List<AssignPlayerVO> findQueryDslAll();
+	
+	List<AssignPlayerVO> findQueryDslJoin();
+	
+	List<AssignPlayerRDto> findQueryDslDynamic(AssignPlayerPDto input);
 	
 }

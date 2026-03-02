@@ -6,11 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.document.study.jpa.business.controller.data.AssignPlayerPDto;
+import com.document.study.jpa.business.controller.data.AssignPlayerRDto;
 import com.document.study.jpa.business.controller.data.AssignPlayerVO;
 import com.document.study.jpa.business.repository.AssignPlayerViewRepository;
 import com.document.study.jpa.business.service.AssignPlayerService;
@@ -41,14 +43,15 @@ public class AssignPlayerContoller {
 	}
 	
 	
-	@GetMapping("/find")
-	public ResponseEntity<List<AssignPlayer>> findQueryDslAll() {
-		return new ResponseEntity<List<AssignPlayer>>(assignPlayerService.findQueryDslAll(), CODE_200);
-	}
-	
 	@GetMapping("/find/{team}/{player}")
 	public ResponseEntity<AssignPlayer> findQueryDslOne(@PathVariable String team, @PathVariable String player) {
 		return new ResponseEntity<AssignPlayer>(assignPlayerService.findQueryDslOne(team, player), CODE_200);
+	}
+	
+	
+	@GetMapping("/find")
+	public ResponseEntity<List<AssignPlayerVO>> findQueryDslAll() {
+		return new ResponseEntity<List<AssignPlayerVO>>(assignPlayerService.findQueryDslAll(), CODE_200);
 	}
 	
 	@GetMapping("/find/join")
@@ -57,10 +60,8 @@ public class AssignPlayerContoller {
 	}
 	
 	@GetMapping("/find/dynamic")
-	public ResponseEntity<List<AssignPlayerVO>> findQueryDslDynamic(
-			@RequestParam(required = false) String team, @RequestParam(required = false) String player
-	) {
-		return new ResponseEntity<List<AssignPlayerVO>>(assignPlayerService.findQueryDslDynamic(team, player), CODE_200);
+	public ResponseEntity<List<AssignPlayerRDto>> findQueryDslDynamic(@ModelAttribute AssignPlayerPDto input) {
+		return new ResponseEntity<List<AssignPlayerRDto>>(assignPlayerService.findQueryDslDynamic(input), CODE_200);
 	}
 	
 }
