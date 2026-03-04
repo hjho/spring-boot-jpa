@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.document.study.jpa.business.controller.data.AssignPlayerPDto;
-import com.document.study.jpa.business.controller.data.AssignPlayerRDto;
-import com.document.study.jpa.business.controller.data.AssignPlayerVO;
+import com.document.study.jpa.business.data.AssignPlayerPDto;
+import com.document.study.jpa.business.data.AssignPlayerRDto;
+import com.document.study.jpa.business.data.AssignPlayerVO;
 import com.document.study.jpa.business.repository.AssignPlayerRepository;
 import com.document.study.jpa.entity.AssignPlayer;
 

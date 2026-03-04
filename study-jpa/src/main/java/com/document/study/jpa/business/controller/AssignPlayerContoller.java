@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.document.study.jpa.business.controller.data.AssignPlayerPDto;
-import com.document.study.jpa.business.controller.data.AssignPlayerRDto;
-import com.document.study.jpa.business.controller.data.AssignPlayerVO;
+import com.document.study.jpa.business.data.AssignPlayerPDto;
+import com.document.study.jpa.business.data.AssignPlayerRDto;
+import com.document.study.jpa.business.data.AssignPlayerVO;
 import com.document.study.jpa.business.repository.AssignPlayerViewRepository;
 import com.document.study.jpa.business.service.AssignPlayerService;
 import com.document.study.jpa.entity.AssignPlayer;

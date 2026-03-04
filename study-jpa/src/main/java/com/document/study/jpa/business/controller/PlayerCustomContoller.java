@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.document.study.jpa.business.controller.data.PlayerRVO;
+import com.document.study.jpa.business.data.PlayerRVO;
 import com.document.study.jpa.business.service.PlayerCustomService;
 import com.document.study.jpa.entity.Player;
 

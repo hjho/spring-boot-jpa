@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.document.study.jpa.business.controller.data.TeamRVO;
+import com.document.study.jpa.business.data.TeamRVO;
 import com.document.study.jpa.business.repository.TeamRepository;
 import com.document.study.jpa.entity.Team;
 

@@ -1,4 +1,4 @@
-package com.document.study.jpa.business.controller.data;
+package com.document.study.jpa.business.data;
 
 import com.document.study.jpa.embed.Position;
 import com.querydsl.core.annotations.QueryProjection;

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.document.study.jpa.business.controller.data.PlayerRVO;
+import com.document.study.jpa.business.data.PlayerRVO;
 import com.document.study.jpa.business.repository.PlayerRepository;
 import com.document.study.jpa.entity.Player;
 

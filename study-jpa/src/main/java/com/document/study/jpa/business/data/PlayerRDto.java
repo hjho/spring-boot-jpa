@@ -1,4 +1,4 @@
-package com.document.study.jpa.business.controller.data;
+package com.document.study.jpa.business.data;
 
 import java.util.ArrayList;
 import java.util.List;

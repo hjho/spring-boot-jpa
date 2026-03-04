@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.document.study.jpa.business.controller.data.TeamRVO;
+import com.document.study.jpa.business.data.TeamRVO;
 import com.document.study.jpa.entity.Team;
 
 public interface TeamRepository extends JpaRepository<Team, String> {

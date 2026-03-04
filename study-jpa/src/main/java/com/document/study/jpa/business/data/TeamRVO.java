@@ -1,6 +1,4 @@
-package com.document.study.jpa.business.controller.data;
-
-import com.fasterxml.jackson.annotation.JsonRawValue;
+package com.document.study.jpa.business.data;
 
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
@@ -13,20 +11,19 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class PlayerRVO {
+public class TeamRVO {
     
-    @Id
+	@Id
     private String code;
     
-	private Long   age;
-	
     private String name;
     
-    private String cardNo;
-    
-    private String brandNm;
-    
-    @JsonRawValue
-    private String positions;
+    private String ownerName;
+	
+	private String mobile;
+	
+	private String address;
+	
+	private Long   playerCnt;
     
 }

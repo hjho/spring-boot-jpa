@@ -3,15 +3,15 @@ package com.document.study.jpa.business.repository;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.document.study.jpa.business.controller.data.AssignPlayerPDto;
-import com.document.study.jpa.business.controller.data.AssignPlayerRDto;
-import com.document.study.jpa.business.controller.data.AssignPlayerVO;
 import com.document.study.jpa.business.controller.data.QAssignPlayerRDto;
 import com.document.study.jpa.business.controller.data.QPlayerCardRDto;
 import com.document.study.jpa.business.controller.data.QPlayerPositionRDto;
 import com.document.study.jpa.business.controller.data.QPlayerRDto;
 import com.document.study.jpa.business.controller.data.QTeamInfoRDto;
 import com.document.study.jpa.business.controller.data.QTeamRDto;
+import com.document.study.jpa.business.data.AssignPlayerPDto;
+import com.document.study.jpa.business.data.AssignPlayerRDto;
+import com.document.study.jpa.business.data.AssignPlayerVO;
 import com.document.study.jpa.entity.AssignPlayer;
 import com.document.study.jpa.entity.Player;
 import com.document.study.jpa.entity.PlayerCard;
