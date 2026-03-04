@@ -66,14 +66,14 @@
 		    <groupId>io.github.openfeign.querydsl</groupId>
 		    <artifactId>querydsl-jpa</artifactId>
 		    <version>7.1</version>
-		    <scope>compile</scope>
+		    <scope>provided</scope>
 		</dependency>
 		<!-- Source: https://mvnrepository.com/artifact/io.github.openfeign.querydsl/querydsl-apt -->
 		<dependency>
 		    <groupId>io.github.openfeign.querydsl</groupId>
 		    <artifactId>querydsl-apt</artifactId>
 		    <version>7.1</version>
-		    <scope>compile</scope>
+		    <scope>provided</scope>
 		</dependency>
 
 

@@ -32,7 +32,6 @@ import com.querydsl.core.types.QBean;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -140,7 +139,15 @@ public class AssignPlayerRepositoryImpl implements AssignPlayerRepositoryCustom 
 															qPlayerPosition.career
 													)
 											).as("position"));
-					
+		
+		QBean<AssignPlayerVO> qBeanAssign = Projections.bean(
+												AssignPlayerVO.class, 
+													ExpressionUtils.as(qBeanTeam, "team"),
+													ExpressionUtils.as(qBeanPlayer, "player"),
+													qAssignPlayer.backNo,
+													qAssignPlayer.nickName
+											);
+		
 		JPAQuery<AssignPlayer> query = jpaQueryFactory.selectFrom(qAssignPlayer);
 															
 		query
@@ -154,13 +161,7 @@ public class AssignPlayerRepositoryImpl implements AssignPlayerRepositoryCustom 
 		
 		return query.transform(
 						GroupBy.groupBy(qAssignPlayer.team.code, qAssignPlayer.player.code).list(
-								Projections.bean(
-									AssignPlayerVO.class, 
-										ExpressionUtils.as(qBeanTeam, "team"),
-										ExpressionUtils.as(qBeanPlayer, "player"),
-										qAssignPlayer.backNo,
-										qAssignPlayer.nickName
-								)
+								qBeanAssign
 						)
 				);
 	}
